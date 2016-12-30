@@ -1,0 +1,45 @@
+{
+  "name": "typescript-wysiwyg-editor",
+  "version": "0.0.1",
+  "description": "WYSIWYG Web Page editor on Typescript",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "webpack",
+    "dev": "webpack-dev-server --content-base \"build/\" --colors --inline --port=8000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ButinVladimir/Training-Typescript-WYSIWYG-Editor.git"
+  },
+  "author": "Vladimir Butin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ButinVladimir/Training-Typescript-WYSIWYG-Editor/issues"
+  },
+  "homepage": "https://github.com/ButinVladimir/Training-Typescript-WYSIWYG-Editor#readme",
+  "devDependencies": {
+    "@types/bootstrap": "^3.3.32",
+    "@types/es6-promise": "0.0.32",
+    "@types/file-saver": "0.0.0",
+    "@types/jquery": "^2.0.34",
+    "@types/jszip": "0.0.31",
+    "@types/node": "^6.0.54",
+    "awesome-typescript-loader": "^3.0.0-beta.17",
+    "bootstrap": "^3.3.7",
+    "css-loader": "^0.26.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
+    "html-loader": "^0.4.4",
+    "html-webpack-plugin": "^2.24.1",
+    "jquery": "^3.1.1",
+    "resolve-url-loader": "^1.6.1",
+    "style-loader": "^0.13.1",
+    "tslint": "^4.1.1",
+    "tslint-loader": "^3.3.0",
+    "typescript": "^2.1.4",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2"
+  }
+}

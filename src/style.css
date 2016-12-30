@@ -1,0 +1,57 @@
+body {
+    padding-top: 50px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.content-container {
+    padding: 15px 15px 15px 0;
+}
+
+.scroll-view {
+    height: calc(100vh - 50px);
+    overflow: auto;
+}
+
+.side-panel {
+    background: #f8f8f8;
+    border: 1px solid #e7e7e7;
+    box-sizing: border-box;
+    float: right;
+    max-width: 100%;
+    padding: 15px;
+    width: 500px;
+}
+
+.block-container > .block-title {
+    cursor: pointer;
+}
+
+.block-container > .block-buttons {
+    display: none;
+}
+
+.block-container:hover > .block-title,
+.block-container.selected > .block-title {
+    background: #777;
+    color: white;
+}
+
+.block-container > .block-container-inner {
+    border: 1px solid grey;
+    padding: 10px;
+}
+
+.block-container.selected > .block-container-inner {
+    border: 2px solid lightblue;
+    display: block;
+    padding: 25px 40px;
+}
+
+.site-row {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}

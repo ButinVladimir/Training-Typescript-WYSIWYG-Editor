@@ -1,6 +1,6 @@
 import { EventEmitter } from "events";
-import { ElementsTypes, EVENT_SELECTED, EVENT_DESELECTED, EVENT_ADDED } from "../consts";
-import { IElement } from "../elements/base";
+import { ElementsTypes, EVENT_SELECTED, EVENT_DESELECTED, EVENT_ADDED, EVENT_STYLE_UPDATED, EVENT_PREVIEW, EVENT_WORK } from "../consts";
+import { IElement, IStylesWrapper } from "../elements/base";
 
 export class Dispatcher extends EventEmitter {
     constructor() {
@@ -17,5 +17,17 @@ export class Dispatcher extends EventEmitter {
 
     public onAdd(elementType: ElementsTypes): void {
         this.emit(EVENT_ADDED, elementType);
+    }
+
+    public onStyleUpdate(stylesWrapper: IStylesWrapper) {
+        this.emit(EVENT_STYLE_UPDATED, stylesWrapper);
+    }
+
+    public onPreview() {
+        this.emit(EVENT_PREVIEW);
+    }
+
+    public onWork() {
+        this.emit(EVENT_WORK);
     }
 }

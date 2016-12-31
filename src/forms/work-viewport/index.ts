@@ -6,6 +6,9 @@ const template: string = require("./template.html");
 
 export interface IWorkViewport {
     readonly $element: JQuery;
+
+    show(): void;
+    hide(): void;
     setContainer(element: IElement): void;
 }
 
@@ -22,6 +25,14 @@ export class WorkViewport implements IWorkViewport {
 
             this._dispatcher.onDeselect();
         });
+    }
+
+    public show(): void {
+        this.$element.removeClass("hidden");
+    }
+
+    public hide(): void {
+        this.$element.addClass("hidden");
     }
 
     public setContainer(element: IElement): void {

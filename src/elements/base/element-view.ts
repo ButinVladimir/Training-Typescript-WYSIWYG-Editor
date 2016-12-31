@@ -1,6 +1,7 @@
 import * as $ from "jquery";
 import { EventEmitter } from "events";
 import { StylesTypes, EVENT_SELECTED } from "../../consts";
+import { IStyleRepository } from "../../storages/style-repository";
 import { IStylesWrapper } from "./styles-wrapper";
 
 const blockTemplate = require("./template-block.html");
@@ -8,7 +9,7 @@ const blockTemplate = require("./template-block.html");
 export interface IElementView {
     render(): JQuery;
     updateChildren(childrenView: IElementView[]): void;
-    applyStyles(stylesWrapper: IStylesWrapper): void;
+    applyStyles(styleRepository: IStyleRepository, stylesWrapper: IStylesWrapper): void;
 }
 
 export abstract class ElementWorkView extends EventEmitter implements IElementView {
@@ -37,7 +38,7 @@ export abstract class ElementWorkView extends EventEmitter implements IElementVi
         childrenView.forEach((childView: IElementView) => childrenContainer.append(childView.render()));
     }
 
-    public abstract applyStyles(stylesWrapper: IStylesWrapper): void;
+    public abstract applyStyles(styleRepository: IStyleRepository, stylesWrapper: IStylesWrapper): void;
 
     public deselect(): void {
         this.$element.removeClass("selected");

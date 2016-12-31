@@ -2,6 +2,7 @@ import { ElementsTypes } from "../../consts";
 import { Dispatcher } from "../../dispatcher";
 import { IElement } from "./element";
 import { IElementRepository } from "../../storages/element-repository";
+import { IStyleRepository } from "../../storages/style-repository";
 
 export interface IElementFactory {
     readonly typeId: ElementsTypes;
@@ -17,7 +18,8 @@ export abstract class BaseElementFactory implements IElementFactory {
 
     constructor(
         protected dispatcher: Dispatcher,
-        protected elementRepository: IElementRepository) {
+        protected elementRepository: IElementRepository,
+        protected styleRepository: IStyleRepository) {
     }
 
     public abstract getTitle(): string;

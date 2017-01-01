@@ -1,6 +1,6 @@
 import { Dispatcher } from "../../dispatcher";
 import { ElementsTypes } from "../../consts";
-import { IElement, BaseElementFactory } from "../base";
+import { BaseElementFactory } from "../base";
 import { IElementRepository } from "../../storages/element-repository";
 import { IStyleRepository } from "../../storages/style-repository";
 import { ContainerElement } from "./element";
@@ -23,7 +23,7 @@ export class ContainerElementFactory extends BaseElementFactory {
         return ElementsTypes.container;
     }
 
-    public createElement(): IElement {
+    public createElement(): ContainerElement {
         const id = this.elementRepository.getElementId();
         const element = new ContainerElement(this.dispatcher, this.styleRepository, id);
 

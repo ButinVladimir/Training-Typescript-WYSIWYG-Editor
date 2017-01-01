@@ -11,7 +11,11 @@ import { ColumnWorkView } from "./work-view";
 import { ColumnRenderView } from "./render-view";
 
 const supportedTypesIds: ElementsTypes[] = [
-//    ElementsTypes.column
+    ElementsTypes.row,
+    ElementsTypes.text,
+    ElementsTypes.image,
+    ElementsTypes.button,
+    ElementsTypes.link
 ];
 
 const supportedStylesIds: StylesTypes[] = [

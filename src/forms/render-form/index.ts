@@ -23,6 +23,12 @@ export class RenderForm implements IRenderForm {
 
             this.onPreviewBtnClick();
         });
+
+        this.$element.find("#save-btn").click((e: JQueryEventObject) => {
+            e.preventDefault();
+
+            this.onSaveBtnClick();
+        });
     }
 
     public setPreview(preview: boolean): void {
@@ -36,5 +42,9 @@ export class RenderForm implements IRenderForm {
         } else {
             this._dispatcher.onWork();
         }
+    }
+
+    private onSaveBtnClick() {
+        this._dispatcher.onSave();
     }
 }

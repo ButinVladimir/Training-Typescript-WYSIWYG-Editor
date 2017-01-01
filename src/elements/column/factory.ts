@@ -1,6 +1,6 @@
 import { Dispatcher } from "../../dispatcher";
 import { ElementsTypes } from "../../consts";
-import { IElement, BaseElementFactory } from "../base";
+import { BaseElementFactory } from "../base";
 import { IElementRepository } from "../../storages/element-repository";
 import { IStyleRepository } from "../../storages/style-repository";
 import { ColumnElement } from "./element";
@@ -23,7 +23,7 @@ export class ColumnElementFactory extends BaseElementFactory {
         return ElementsTypes.column;
     }
 
-    public createElement(): IElement {
+    public createElement(): ColumnElement {
         const id = this.elementRepository.getElementId();
         const element = new ColumnElement(this.dispatcher, this.styleRepository, id);
 

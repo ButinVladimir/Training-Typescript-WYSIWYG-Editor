@@ -110,7 +110,14 @@ export abstract class BaseElement extends EventEmitter implements IElement {
     }
 
     public removeChild(childElement: IElement): void {
-        this.children = this.children.filter((child: IElement) => child !== childElement);
+        console.dir(childElement);
+
+        this.children = this.children.filter((child: IElement) => {
+            console.dir(child);
+
+            return child !== childElement;
+
+        });
         this.updateChildrenView();
     }
 
@@ -120,15 +127,7 @@ export abstract class BaseElement extends EventEmitter implements IElement {
 
     public setParent(parent: IElement): void {
         if (!parent || parent.supportElement(this.getTypeId())) {
-            if (this._parent) {
-                this._parent.removeChild(this);
-            }
-
             this._parent = parent;
-
-            if (this._parent) {
-                this._parent.appendChild(this);
-            }
         }
     }
 
@@ -183,23 +182,23 @@ export abstract class BaseElement extends EventEmitter implements IElement {
 
     public onCopy(): void {
         if (this.canBeCopied()) {
-            this._dispatcher.onCopy(this);
+            this._dispatcher.onCopy();
         }
     }
 
     public onPaste(): void {
-        this._dispatcher.onPaste(this);
+        this._dispatcher.onPaste();
     }
 
     public onDelete(): void {
         if (this.canBeDeleted()) {
-            this._dispatcher.onDelete(this);
+            this._dispatcher.onDelete();
         }
     }
 
     public onEdit(): void {
         if (this.canBeUpdated()) {
-            this._dispatcher.onEdit(this);
+            this._dispatcher.onEdit();
         }
     }
 

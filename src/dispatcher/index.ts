@@ -10,8 +10,10 @@ import { ElementsTypes,
          EVENT_PASTED,
          EVENT_DELETED,
          EVENT_EDITED,
-         EVENT_UPDATED } from "../consts";
+         EVENT_UPDATED,
+         EVENT_SAVED } from "../consts";
 import { IElement, IStylesWrapper } from "../elements/base";
+import { IUpdater } from "../updaters/base";
 
 export class Dispatcher extends EventEmitter {
     constructor() {
@@ -42,19 +44,27 @@ export class Dispatcher extends EventEmitter {
         this.emit(EVENT_WORK);
     }
 
-    public onCopy(element: IElement) {
-        this.emit(EVENT_COPIED, element);
+    public onCopy() {
+        this.emit(EVENT_COPIED);
     }
 
-    public onPaste(element: IElement) {
-        this.emit(EVENT_PASTED, element);
+    public onPaste() {
+        this.emit(EVENT_PASTED);
     }
 
-    public onDelete(element: IElement) {
-        this.emit(EVENT_DELETED, element);
+    public onDelete() {
+        this.emit(EVENT_DELETED);
     }
 
-    public onEdit(element: IElement) {
-        this.emit(EVENT_EDITED, element);
+    public onEdit() {
+        this.emit(EVENT_EDITED);
+    }
+
+    public onUpdate(updater: IUpdater) {
+        this.emit(EVENT_UPDATED, updater);
+    }
+
+    public onSave() {
+        this.emit(EVENT_SAVED);
     }
 }

@@ -28,7 +28,7 @@ export class ColumnWorkView extends ElementWorkView {
                 StylesTypes.height,
             ]);
 
-        applyStylesArray(styleRepository, stylesWrapper, container, [
+        applyStylesArray(styleRepository, stylesWrapper, this.$element, [
                 StylesTypes.flexGrow,
             ]);
     }

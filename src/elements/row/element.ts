@@ -39,6 +39,8 @@ defaultStyles.set(StylesTypes.backgroundColor, "#ffffff");
 defaultStyles.set(StylesTypes.alignItems, "stretch");
 defaultStyles.set(StylesTypes.justifyContent, "flex-start");
 
+const MAX_CHILDREN = 12;
+
 export class RowElement extends BaseElement {
     private _workView: RowWorkView;
 
@@ -66,6 +68,10 @@ export class RowElement extends BaseElement {
 
     public getSupportedStylesIds(): StylesTypes[] {
         return supportedStylesIds;
+    }
+
+    public supportElement(elementType: ElementsTypes): boolean {
+        return super.supportElement(elementType) && this.children.length < MAX_CHILDREN;
     }
 
     public getWorkView(): IElementWorkView {

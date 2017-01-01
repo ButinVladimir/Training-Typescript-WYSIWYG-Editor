@@ -31,6 +31,9 @@ export abstract class BaseElementFactory implements IElementFactory {
         const newElement: IElement = this.createElement();
 
         newElement.setParent(parent);
+        if (parent) {
+            parent.appendChild(newElement);
+        }
 
         return newElement;
     }

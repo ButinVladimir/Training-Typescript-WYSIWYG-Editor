@@ -1,4 +1,7 @@
 import * as $ from "jquery";
+import * as JSZip from "jszip";
+import * as fileSaver from "file-saver";
+
 import { Dispatcher } from "../dispatcher";
 import { ElementsTypes,
          StylesTypes,
@@ -12,17 +15,26 @@ import { ElementsTypes,
          EVENT_PASTED,
          EVENT_DELETED,
          EVENT_EDITED,
-         EVENT_UPDATED } from "../consts";
+         EVENT_UPDATED,
+         EVENT_SAVED } from "../consts";
+
 import { IRenderForm } from "../forms/render-form";
 import { IAddForm } from "../forms/add-form";
 import { IStyleForm } from "../forms/style-form";
+import { IUpdaterForm } from "../forms/updater-form";
 import { IWorkViewport } from "../forms/work-viewport";
 import { IPreviewViewport } from "../forms/preview-viewport";
+
 import { IElementFactoryRepository } from "../storages/element-factory-repository";
 import { IElementRepository } from "../storages/element-repository";
+import { IUpdaterRepository } from "../storages/updater-repository";
 import { IElement, IStylesWrapper } from "../elements/base";
 
+import { IUpdater } from "../updaters/base";
+
 const template: string = require("./template.html");
+const resultTemplate: string = require("./result-template.html");
+const replaceString: string = "!--CONTENT--";
 
 export interface IEditor {
     readonly $element: JQuery;
@@ -39,10 +51,12 @@ export class Editor implements IEditor {
         private _renderForm: IRenderForm,
         private _addForm: IAddForm,
         private _styleForm: IStyleForm,
+        private _updaterForm: IUpdaterForm,
         private _workViewport: IWorkViewport,
         private _previewViewport: IPreviewViewport,
         private _elementFactoryRepository: IElementFactoryRepository,
-        private _elementRepository: IElementRepository) {
+        private _elementRepository: IElementRepository,
+        private _updaterRepository: IUpdaterRepository) {
         this._selected = undefined;
         this._copied = undefined;
 
@@ -54,6 +68,7 @@ export class Editor implements IEditor {
         this.$element.find("#work-viewport").append(this._workViewport.$element);
         this.$element.filter("#preview-viewport").append(this._previewViewport.$element);
         this.$element.find("#work-viewport").click((e: JQueryEventObject): void => this._dispatcher.onDeselect());
+        this.$element.append(this._updaterForm.$element);
 
         this._container = this._elementFactoryRepository.get(ElementsTypes.container).createElement();
         this._workViewport.setContainer(this._container);
@@ -68,7 +83,8 @@ export class Editor implements IEditor {
         this._dispatcher.on(EVENT_PASTED, (): void => this.onPaste());
         this._dispatcher.on(EVENT_DELETED, (): void => this.onDelete());
         this._dispatcher.on(EVENT_EDITED, (): void => this.onEdit());
-        this._dispatcher.on(EVENT_UPDATED, (): void => this.onUpdate());
+        this._dispatcher.on(EVENT_UPDATED, (updater: IUpdater): void => this.onUpdate(updater));
+        this._dispatcher.on(EVENT_SAVED, (): void => this.onSave());
     }
 
     private onSelect(element: IElement): void {
@@ -132,6 +148,7 @@ export class Editor implements IEditor {
                 if (currentTuple) {
                     const newChild = this._elementFactoryRepository.get(child.getTypeId()).copyElement(child);
                     newChildren.push(newChild);
+                    newChild.setParent(currentTuple[1]);
                     queue.push([child, newChild]);
                 }
             };
@@ -181,8 +198,30 @@ export class Editor implements IEditor {
     }
 
     private onEdit() {
+        if (this._selected && this._selected.canBeUpdated()) {
+            this._updaterForm.startEdit(this._updaterRepository.get(this._selected.getTypeId()), this._selected);
+        }
     }
 
-    private onUpdate() {
+    private onUpdate(updater: IUpdater) {
+        if (this._selected && this._selected.canBeUpdated()) {
+            updater.setElementValues(this._selected);
+        }
+    }
+
+    private onSave() {
+        const $container: JQuery = $("<div>");
+        this._container.getRenderView().render().appendTo($container);
+
+        const result: string = resultTemplate.replace(replaceString, $container.html());
+        console.dir($container.html());
+        console.dir(result);
+
+        const zip: JSZip = new JSZip();
+        zip.file("page.html", result);
+
+        zip.generateAsync({ type: "blob" }).then((content: any) => {
+                fileSaver.saveAs(content, "page.zip");
+            });
     }
 }

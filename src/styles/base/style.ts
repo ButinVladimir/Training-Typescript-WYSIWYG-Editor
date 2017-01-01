@@ -28,7 +28,7 @@ export abstract class BaseStyle implements IStyle {
     protected abstract getCssStyle(): string;
 }
 
-const sizeRegexp: RegExp = /^(-?(0|\d+(%|px|em|vm|vh))|auto)$/;
+const sizeRegexp: RegExp = /^(-?(0|\d+(%|px|em|vw|vh))|auto)$/;
 
 export abstract class BaseSizeStyle extends BaseStyle {
     public validate(value: string): boolean {

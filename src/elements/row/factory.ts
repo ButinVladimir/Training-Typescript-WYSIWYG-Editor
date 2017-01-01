@@ -1,6 +1,6 @@
 import { Dispatcher } from "../../dispatcher";
 import { ElementsTypes } from "../../consts";
-import { IElement, BaseElementFactory } from "../base";
+import { BaseElementFactory } from "../base";
 import { IElementRepository } from "../../storages/element-repository";
 import { IStyleRepository } from "../../storages/style-repository";
 import { RowElement } from "./element";
@@ -23,7 +23,7 @@ export class RowElementFactory extends BaseElementFactory {
         return ElementsTypes.row;
     }
 
-    public createElement(): IElement {
+    public createElement(): RowElement {
         const id = this.elementRepository.getElementId();
         const element = new RowElement(this.dispatcher, this.styleRepository, id);
 

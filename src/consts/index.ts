@@ -1,7 +1,11 @@
 export enum ElementsTypes {
     container,
     row,
-    column
+    column,
+    text,
+    image,
+    button,
+    link
 };
 
 export enum StylesTypes {
@@ -18,6 +22,12 @@ export enum StylesTypes {
     flexGrow,
     width,
     height,
+    fontSize,
+    fontStyle,
+    fontWeight,
+    textAlign,
+    textColor,
+    textDecoration
 };
 
 export const EVENT_SELECTED = "selected";
@@ -31,3 +41,4 @@ export const EVENT_PASTED = "paste";
 export const EVENT_DELETED = "delete";
 export const EVENT_EDITED = "edit";
 export const EVENT_UPDATED = "update";
+export const EVENT_SAVED = "save";

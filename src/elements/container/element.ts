@@ -46,9 +46,7 @@ export class ContainerElement extends BaseElement {
 
         this._workView = new ContainerWorkView("Container " + this.id);
         this._workView.on(EVENT_SELECTED, () => this.onSelect());
-        this._workView.on(EVENT_COPIED, () => this.onCopy());
         this._workView.on(EVENT_PASTED, () => this.onPaste());
-        this._workView.on(EVENT_DELETED, () => this.onDelete());
         this.initWorkView();
     }
 

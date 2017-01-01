@@ -1,6 +1,6 @@
 import * as $ from "jquery";
 import { Dispatcher } from "../../dispatcher";
-import { ElementsTypes, EVENT_SELECTED, EVENT_DESELECTED, EVENT_ADDED } from "../../consts";
+import { ElementsTypes, EVENT_SELECTED, EVENT_DESELECTED } from "../../consts";
 import { IElementFactoryRepository } from "../../storages/element-factory-repository";
 import { IElement } from "../../elements/base";
 

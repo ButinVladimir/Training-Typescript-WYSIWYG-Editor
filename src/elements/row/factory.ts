@@ -1,5 +1,5 @@
 import { Dispatcher } from "../../dispatcher";
-import { EVENT_SELECTED } from "../../consts";
+import { ElementsTypes } from "../../consts";
 import { IElement, BaseElementFactory } from "../base";
 import { IElementRepository } from "../../storages/element-repository";
 import { IStyleRepository } from "../../storages/style-repository";
@@ -15,9 +15,12 @@ export class RowElementFactory extends BaseElementFactory {
         super(dispatcher, elementRepository, styleRepository);
     }
 
-
     public getTitle() {
         return title;
+    }
+
+    public getTypeId(): ElementsTypes {
+        return ElementsTypes.row;
     }
 
     public createElement(): IElement {

@@ -5,7 +5,7 @@ import { IStyleRepository } from "../../storages/style-repository";
 
 const template = require("./template");
 
-export class ContainerRenderView extends ElementRenderView {
+export class ColumnRenderView extends ElementRenderView {
     constructor() {
         super();
         this.$element = $(template);
@@ -21,6 +21,9 @@ export class ContainerRenderView extends ElementRenderView {
                 StylesTypes.borderStyle,
                 StylesTypes.borderColor,
                 StylesTypes.backgroundColor,
+                StylesTypes.flexGrow,
+                StylesTypes.width,
+                StylesTypes.height,
             ]);
     }
 }

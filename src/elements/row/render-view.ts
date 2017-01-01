@@ -1,29 +1,18 @@
 import * as $ from "jquery";
-import { IElementView, IStylesWrapper, applyStylesArray } from "../base";
+import { ElementRenderView, IStylesWrapper, applyStylesArray } from "../base";
 import { StylesTypes } from "../../consts";
 import { IStyleRepository } from "../../storages/style-repository";
 
 const template = require("./template");
 
-export class RowRenderView implements IElementView {
-    private _$element: JQuery;
-
+export class RowRenderView extends ElementRenderView {
     constructor() {
-        this._$element = $(template);
-    }
-
-    public render(): JQuery {
-        return this._$element;
-    }
-
-    public updateChildren(childrenView: IElementView[]): void {
-        this._$element.empty();
-
-        childrenView.forEach((childView: IElementView) => this._$element.append(childView.render()));
+        super();
+        this.$element = $(template);
     }
 
     public applyStyles(styleRepository: IStyleRepository, stylesWrapper: IStylesWrapper): void {
-        applyStylesArray(styleRepository, stylesWrapper, this._$element, [
+        applyStylesArray(styleRepository, stylesWrapper, this.$element, [
                 StylesTypes.paddingTop,
                 StylesTypes.paddingRight,
                 StylesTypes.paddingBottom,
@@ -32,6 +21,8 @@ export class RowRenderView implements IElementView {
                 StylesTypes.borderStyle,
                 StylesTypes.borderColor,
                 StylesTypes.backgroundColor,
+                StylesTypes.alignItems,
+                StylesTypes.justifyContent
             ]);
     }
 }

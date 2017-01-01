@@ -23,7 +23,7 @@ export class ContainerWorkView extends ElementWorkView {
                 StylesTypes.borderWidth,
                 StylesTypes.borderStyle,
                 StylesTypes.borderColor,
-                StylesTypes.backgroundColor,
+                StylesTypes.backgroundColor
             ]);
     }
 }

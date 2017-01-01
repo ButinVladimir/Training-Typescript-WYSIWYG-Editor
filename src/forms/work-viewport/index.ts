@@ -16,15 +16,8 @@ export class WorkViewport implements IWorkViewport {
     public readonly $element: JQuery;
 
     constructor(
-        private _dispatcher: Dispatcher
-        ) {
+        private _dispatcher: Dispatcher) {
         this.$element = $(template);
-        this.$element.click((e: JQueryEventObject) => {
-            e.preventDefault();
-            e.stopPropagation();
-
-            this._dispatcher.onDeselect();
-        });
     }
 
     public show(): void {

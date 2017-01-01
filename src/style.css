@@ -7,7 +7,7 @@ textarea {
 }
 
 .content-container {
-    padding: 15px 15px 15px 0;
+    padding: 15px 15px 0;
 }
 
 .scroll-view {
@@ -54,4 +54,8 @@ textarea {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
+}
+
+#main-container {
+    padding: 0;
 }

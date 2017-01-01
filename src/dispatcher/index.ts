@@ -1,5 +1,16 @@
 import { EventEmitter } from "events";
-import { ElementsTypes, EVENT_SELECTED, EVENT_DESELECTED, EVENT_ADDED, EVENT_STYLE_UPDATED, EVENT_PREVIEW, EVENT_WORK } from "../consts";
+import { ElementsTypes,
+         EVENT_SELECTED,
+         EVENT_DESELECTED,
+         EVENT_ADDED,
+         EVENT_STYLE_UPDATED,
+         EVENT_PREVIEW,
+         EVENT_WORK,
+         EVENT_COPIED,
+         EVENT_PASTED,
+         EVENT_DELETED,
+         EVENT_EDITED,
+         EVENT_UPDATED } from "../consts";
 import { IElement, IStylesWrapper } from "../elements/base";
 
 export class Dispatcher extends EventEmitter {
@@ -29,5 +40,21 @@ export class Dispatcher extends EventEmitter {
 
     public onWork() {
         this.emit(EVENT_WORK);
+    }
+
+    public onCopy(element: IElement) {
+        this.emit(EVENT_COPIED, element);
+    }
+
+    public onPaste(element: IElement) {
+        this.emit(EVENT_PASTED, element);
+    }
+
+    public onDelete(element: IElement) {
+        this.emit(EVENT_DELETED, element);
+    }
+
+    public onEdit(element: IElement) {
+        this.emit(EVENT_EDITED, element);
     }
 }

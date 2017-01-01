@@ -24,6 +24,8 @@ export class RowWorkView extends ElementWorkView {
                 StylesTypes.borderStyle,
                 StylesTypes.borderColor,
                 StylesTypes.backgroundColor,
+                StylesTypes.alignItems,
+                StylesTypes.justifyContent
             ]);
     }
 }

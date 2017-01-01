@@ -7,11 +7,11 @@ import { ElementsTypes,
          EVENT_COPIED,
          EVENT_PASTED,
          EVENT_DELETED } from "../../consts";
-import { RowWorkView } from "./work-view";
-import { RowRenderView } from "./render-view";
+import { ColumnWorkView } from "./work-view";
+import { ColumnRenderView } from "./render-view";
 
 const supportedTypesIds: ElementsTypes[] = [
-    ElementsTypes.column
+//    ElementsTypes.column
 ];
 
 const supportedStylesIds: StylesTypes[] = [
@@ -23,8 +23,9 @@ const supportedStylesIds: StylesTypes[] = [
     StylesTypes.borderStyle,
     StylesTypes.borderColor,
     StylesTypes.backgroundColor,
-    StylesTypes.alignItems,
-    StylesTypes.justifyContent,
+    StylesTypes.flexGrow,
+    StylesTypes.width,
+    StylesTypes.height,
 ];
 
 const defaultStyles: StylesWrapper = new StylesWrapper();
@@ -36,11 +37,12 @@ defaultStyles.set(StylesTypes.borderWidth, "0px");
 defaultStyles.set(StylesTypes.borderStyle, "none");
 defaultStyles.set(StylesTypes.borderColor, "#000000");
 defaultStyles.set(StylesTypes.backgroundColor, "#ffffff");
-defaultStyles.set(StylesTypes.alignItems, "stretch");
-defaultStyles.set(StylesTypes.justifyContent, "flex-start");
+defaultStyles.set(StylesTypes.flexGrow, "0");
+defaultStyles.set(StylesTypes.width, "auto");
+defaultStyles.set(StylesTypes.height, "auto");
 
-export class RowElement extends BaseElement {
-    private _workView: RowWorkView;
+export class ColumnElement extends BaseElement {
+    private _workView: ColumnWorkView;
 
     constructor(
         dispatcher: Dispatcher,
@@ -48,7 +50,7 @@ export class RowElement extends BaseElement {
         id: string) {
         super(dispatcher, styleRepository, id);
 
-        this._workView = new RowWorkView("Row " + this.id);
+        this._workView = new ColumnWorkView("Column " + this.id);
         this._workView.on(EVENT_SELECTED, () => this.onSelect());
         this._workView.on(EVENT_COPIED, () => this.onCopy());
         this._workView.on(EVENT_PASTED, () => this.onPaste());
@@ -57,7 +59,7 @@ export class RowElement extends BaseElement {
     }
 
     public getTypeId(): ElementsTypes {
-        return ElementsTypes.row;
+        return ElementsTypes.column;
     }
 
     public getSupportedTypesIds(): ElementsTypes[] {
@@ -73,7 +75,7 @@ export class RowElement extends BaseElement {
     }
 
     public getRenderView(): IElementView {
-        const renderView = new RowRenderView();
+        const renderView = new ColumnRenderView();
 
         renderView.updateChildren(this.children.map((childElement: IElement) => childElement.getRenderView()));
         renderView.applyStyles(this.styleRepository, this.styles);

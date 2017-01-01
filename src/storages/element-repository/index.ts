@@ -7,6 +7,7 @@ export interface IElementRepository {
     get(id: string): IElement;
     getElementId(): string;
     set(element: IElement): void;
+    delete(id: string): void;
 }
 
 export class ElementRepository implements IElementRepository {
@@ -37,5 +38,11 @@ export class ElementRepository implements IElementRepository {
         }
 
         this._elementMapping[element.id] = element;
+    }
+
+    public delete(id: string): void {
+        if (id in this._elementMapping) {
+            delete this._elementMapping[id];
+        }
     }
 }

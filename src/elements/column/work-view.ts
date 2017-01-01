@@ -1,18 +1,21 @@
 import * as $ from "jquery";
-import { ElementRenderView, IStylesWrapper, applyStylesArray } from "../base";
+import { ElementWorkView, IStylesWrapper, applyStylesArray } from "../base";
 import { StylesTypes } from "../../consts";
 import { IStyleRepository } from "../../storages/style-repository";
 
 const template = require("./template");
 
-export class ContainerRenderView extends ElementRenderView {
-    constructor() {
-        super();
-        this.$element = $(template);
+export class ColumnWorkView extends ElementWorkView {
+    constructor(title: string) {
+        super(title);
+
+        this.$element.children(".block-content").append(template);
     }
 
     public applyStyles(styleRepository: IStyleRepository, stylesWrapper: IStylesWrapper): void {
-        applyStylesArray(styleRepository, stylesWrapper, this.$element, [
+        const container = this.$element.children(".block-content").children(".site-column");
+
+        applyStylesArray(styleRepository, stylesWrapper, container, [
                 StylesTypes.paddingTop,
                 StylesTypes.paddingRight,
                 StylesTypes.paddingBottom,
@@ -21,6 +24,12 @@ export class ContainerRenderView extends ElementRenderView {
                 StylesTypes.borderStyle,
                 StylesTypes.borderColor,
                 StylesTypes.backgroundColor,
+                StylesTypes.width,
+                StylesTypes.height,
+            ]);
+
+        applyStylesArray(styleRepository, stylesWrapper, container, [
+                StylesTypes.flexGrow,
             ]);
     }
 }

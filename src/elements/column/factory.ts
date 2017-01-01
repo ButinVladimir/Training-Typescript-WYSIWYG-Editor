@@ -3,11 +3,11 @@ import { ElementsTypes } from "../../consts";
 import { IElement, BaseElementFactory } from "../base";
 import { IElementRepository } from "../../storages/element-repository";
 import { IStyleRepository } from "../../storages/style-repository";
-import { ContainerElement } from "./element";
+import { ColumnElement } from "./element";
 
-const title: string = "Container";
+const title: string = "Column";
 
-export class ContainerElementFactory extends BaseElementFactory {
+export class ColumnElementFactory extends BaseElementFactory {
     constructor(
         dispatcher: Dispatcher,
         elementRepository: IElementRepository,
@@ -20,12 +20,12 @@ export class ContainerElementFactory extends BaseElementFactory {
     }
 
     public getTypeId(): ElementsTypes {
-        return ElementsTypes.container;
+        return ElementsTypes.column;
     }
 
     public createElement(): IElement {
         const id = this.elementRepository.getElementId();
-        const element = new ContainerElement(this.dispatcher, this.styleRepository, id);
+        const element = new ColumnElement(this.dispatcher, this.styleRepository, id);
 
         return element;
     }

@@ -1,8 +1,14 @@
 import { EventEmitter } from "events";
 import { Dispatcher } from "../../dispatcher";
 import { IStyleRepository } from "../../storages/style-repository";
-import { ElementsTypes, StylesTypes, EVENT_SELECTED } from "../../consts";
-import { IElementView, ElementWorkView } from "./element-view";
+import { ElementsTypes,
+         StylesTypes,
+         EVENT_SELECTED,
+         EVENT_COPIED,
+         EVENT_PASTED,
+         EVENT_DELETED,
+         EVENT_EDITED } from "../../consts";
+import { IElementView, IElementWorkView } from "./element-view";
 import { IStylesWrapper, StylesWrapper } from "./styles-wrapper";
 
 export type ElementChildCallback = (child: IElement) => any;
@@ -18,15 +24,26 @@ export interface IElement {
     supportStyle(styleType: StylesTypes): boolean;
     iterateChildren(callback: ElementChildCallback): void;
     appendChild(childElement: IElement): void;
+    appendChildren(childElements: IElement[]): void;
     removeChild(childElement: IElement): void;
-    getWorkView(): ElementWorkView;
+    getWorkView(): IElementWorkView;
     getRenderView(): IElementView;
     setParent(parent: IElement | undefined): void;
     getDefaultStyles(): IStylesWrapper;
     getStyles(): IStylesWrapper;
     applyStyles(wrapper: IStylesWrapper): void;
+    delete(): void;
+
+    canBeCopied(): boolean;
+    canBeDeleted(): boolean;
+    canBeUpdated(): boolean;
+    togglePasteButton(enable: boolean): void;
 
     onSelect(): void;
+    onCopy(): void;
+    onPaste(): void;
+    onDelete(): void;
+    onEdit(): void;
 }
 
 export abstract class BaseElement extends EventEmitter implements IElement {
@@ -83,12 +100,21 @@ export abstract class BaseElement extends EventEmitter implements IElement {
         }
     }
 
+    public appendChildren(childElements: IElement[]): void {
+        childElements.forEach((childElement: IElement) => {
+            if (this.supportElement(childElement.getTypeId())) {
+                this.children.push(childElement);
+            }
+        });
+        this.updateChildrenView();
+    }
+
     public removeChild(childElement: IElement): void {
         this.children = this.children.filter((child: IElement) => child !== childElement);
         this.updateChildrenView();
     }
 
-    public abstract getWorkView(): ElementWorkView;
+    public abstract getWorkView(): IElementWorkView;
 
     public abstract getRenderView(): IElementView;
 
@@ -129,11 +155,62 @@ export abstract class BaseElement extends EventEmitter implements IElement {
         this.getWorkView().applyStyles(this.styleRepository, this.styles);
     }
 
+    public delete(): void {
+        this._parent = undefined;
+        this.children = [];
+        this.getWorkView().delete();
+    }
+
+    public canBeCopied(): boolean {
+        return true;
+    }
+
+    public canBeDeleted(): boolean {
+        return true;
+    }
+
+    public canBeUpdated(): boolean {
+        return true;
+    }
+
+    public togglePasteButton(enable: boolean): void {
+        this.getWorkView().togglePasteButton(enable);
+    }
+
     public onSelect(): void {
         this._dispatcher.onSelect(this);
     }
 
+    public onCopy(): void {
+        if (this.canBeCopied()) {
+            this._dispatcher.onCopy(this);
+        }
+    }
+
+    public onPaste(): void {
+        this._dispatcher.onPaste(this);
+    }
+
+    public onDelete(): void {
+        if (this.canBeDeleted()) {
+            this._dispatcher.onDelete(this);
+        }
+    }
+
+    public onEdit(): void {
+        if (this.canBeUpdated()) {
+            this._dispatcher.onEdit(this);
+        }
+    }
+
     protected updateChildrenView(): void {
         this.getWorkView().updateChildren(this.children.map((childElement: IElement) => childElement.getWorkView()));
+    }
+
+    protected initWorkView(): void {
+        this.getWorkView().applyStyles(this.styleRepository, this.styles);
+        this.getWorkView().toggleCopyButton(this.canBeCopied());
+        this.getWorkView().toggleDeleteButton(this.canBeDeleted());
+        this.getWorkView().toggleEditButton(this.canBeUpdated());
     }
 }

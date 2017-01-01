@@ -17,6 +17,7 @@ import { ElementsTypes, StylesTypes } from "./consts";
 
 import { ContainerElementFactory } from "./elements/container";
 import { RowElementFactory } from "./elements/row";
+import { ColumnElementFactory } from "./elements/column";
 
 import { PaddingTopStyle } from "./styles/padding-top";
 import { PaddingRightStyle } from "./styles/padding-right";
@@ -26,6 +27,11 @@ import { BorderWidthStyle } from "./styles/border-width";
 import { BorderStyleStyle } from "./styles/border-style";
 import { BorderColorStyle } from "./styles/border-color";
 import { BackgroundColorStyle } from "./styles/background-color";
+import { AlignItemsStyle } from "./styles/align-items";
+import { JustifyContentStyle } from "./styles/justify-content";
+import { FlexGrowStyle } from "./styles/flex-grow";
+import { WidthStyle } from "./styles/width";
+import { HeightStyle } from "./styles/height";
 
 require("bootstrap/dist/css/bootstrap.min.css");
 require("./style.css");
@@ -49,9 +55,15 @@ styleRepository.set(StylesTypes.borderWidth, new BorderWidthStyle());
 styleRepository.set(StylesTypes.borderStyle, new BorderStyleStyle());
 styleRepository.set(StylesTypes.borderColor, new BorderColorStyle());
 styleRepository.set(StylesTypes.backgroundColor, new BackgroundColorStyle());
+styleRepository.set(StylesTypes.alignItems, new AlignItemsStyle());
+styleRepository.set(StylesTypes.justifyContent, new JustifyContentStyle());
+styleRepository.set(StylesTypes.flexGrow, new FlexGrowStyle());
+styleRepository.set(StylesTypes.width, new WidthStyle());
+styleRepository.set(StylesTypes.height, new HeightStyle());
 
 elementFactoryRepository.set(ElementsTypes.container, new ContainerElementFactory(dispatcher, elementRepository, styleRepository));
 elementFactoryRepository.set(ElementsTypes.row, new RowElementFactory(dispatcher, elementRepository, styleRepository));
+elementFactoryRepository.set(ElementsTypes.column, new ColumnElementFactory(dispatcher, elementRepository, styleRepository));
 
 const editor: IEditor = new Editor(
         dispatcher,
